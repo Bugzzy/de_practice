@@ -1,0 +1,17 @@
+# CLI уроки 1–3: pwd, ls, cd
+# 5 команд, которые выполнил, с выводом в комментариях
+
+$ pwd
+# /c/Users/user/de_practice
+
+$ ls
+# README.md  week1
+
+$ ls week1
+# cli-practice  sql-practice
+
+$ cd week1/sql-practice
+# (переход в подпапку)
+
+$ pwd
+# /c/Users/user/de_practice/week1/sql-practice
