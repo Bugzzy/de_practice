@@ -1,7 +1,14 @@
+# Учебные материалы курса — не часть портфолио
 week1/cli-practice/*.tar.gz
-week1/cli-practice/data/
 week1/cli-practice/inbox/
 week1/cli-practice/logs/
 week1/cli-practice/config/
 week1/cli-practice/scripts/
 week1/cli-practice/README.txt
+
+# В data/ игнорируем всё, КРОМЕ students.csv (он нужен для воспроизводимости)
+week1/cli-practice/data/*
+!week1/cli-practice/data/students.csv
+
+# Локальная песочница CLI урока 1 — не коммитим
+cli-sandbox/
