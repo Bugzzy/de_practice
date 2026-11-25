@@ -15,3 +15,85 @@ $ cd week1/sql-practice
 
 $ pwd
 # /c/Users/user/de_practice/week1/sql-practice
+
+$mkdir -p создает папку с вложенными каталогами
+
+$touch создает пустые файлы
+
+$cp копировать
+
+$mv переместить или переименовать
+
+$rm удаление
+
+$cat открыть файл редактором
+
+$head показать записи в начале
+
+$tail показать записи в конце
+
+$wc -l счетчик 
+
+$less для просмотра файлов
+
+# ============================================
+# CLI урок 2: «SQL в терминале» — пайпы и фильтры
+# ============================================
+
+# CSV: week1/cli-practice/data/students.csv
+# 6 строк данных + заголовок = 7 строк в файле
+# У Егора grade пустой — файловый аналог NULL
+
+# SQL: SELECT city FROM students
+$ tail -n +2 week1/cli-practice/data/students.csv | cut -d',' -f3
+# Москва, Казань, Москва, Сочи, Казань, Москва
+
+# SQL: WHERE city = 'Москва'
+$ grep 'Москва' week1/cli-practice/data/students.csv
+# 3 строки (Аня, Вера, Егор)
+
+# SQL: GROUP BY city + COUNT(*)
+$ tail -n +2 week1/cli-practice/data/students.csv | cut -d',' -f3 | sort | uniq -c
+# 2 Казань, 3 Москва, 1 Сочи
+
+# SQL: ORDER BY grade DESC LIMIT 3
+$ sort -t',' -k5 -rn week1/cli-practice/data/students.csv | head -3
+# (вставь свой вывод)
+
+# SQL: COUNT(*)
+$ wc -l week1/cli-practice/data/students.csv
+# 7 (включая заголовок!)
+
+# ============================================
+# ТРИ ЛОВУШКИ
+# ============================================
+
+# Ловушка 1: заголовок
+# wc -l считает заголовок (7 вместо 6). SQL COUNT(*) = 6.
+# Чинится: tail -n +2 file | wc -l
+
+# Ловушка 2: Егор и sort
+# sort -rn трактует пустое поле как 0 → Егор СВЕРХУ (reverse).
+# SQL ORDER BY grade DESC → Егор В КОНЦЕ.
+# Файловый «NULL» ведёт себя иначе, чем SQL NULL.
+
+# Ловушка 3: sort перед uniq -c
+# uniq склеивает ТОЛЬКО соседние строки.
+# Без sort: Москва (1), Казань (1), Москва (1), Сочи (1), Казань (1), Москва (1)
+# С sort: 2 Казань, 3 Москва, 1 Сочи
+
+
+$ du -ah . | sort -rh | head -5
+382K    .
+364K    ./events.csv
+4.0K    ./sales_2024-03.csv
+4.0K    ./sales_2024-02.csv
+4.0K    ./sales_2024-01.csv
+
+
+user@WIN-SL3PL7VK6PT UCRT64 ~/de_practice/week1/sql-practice (main)
+$ wc -l ./*sql
+  64 ./lesson1.sql
+  34 ./lesson2.sql
+  44 ./lesson3.sql
+ 142 total
