@@ -26,7 +26,7 @@ $mv переместить или переименовать
 
 $rm удаление
 
-$cat открыть файл редактором
+$cat вывести содержимое на stndout
 
 $head показать записи в начале
 
@@ -73,9 +73,11 @@ $ wc -l week1/cli-practice/data/students.csv
 # Чинится: tail -n +2 file | wc -l
 
 # Ловушка 2: Егор и sort
-# sort -rn трактует пустое поле как 0 → Егор СВЕРХУ (reverse).
-# SQL ORDER BY grade DESC → Егор В КОНЦЕ.
-# Файловый «NULL» ведёт себя иначе, чем SQL NULL.
+# sort -rn: пустое поле = 0 → Егор ПЕРВЫМ (reverse)
+# SQL: порядок NULL зависит от СУБД.
+#   DuckDB: DESC → NULLS LAST (Егор в конце)
+#   PostgreSQL: DESC → NULLS FIRST (Егор в начале)
+# Правильно на собесе: "задаю явно NULLS FIRST/LAST"
 
 # Ловушка 3: sort перед uniq -c
 # uniq склеивает ТОЛЬКО соседние строки.
@@ -97,3 +99,33 @@ $ wc -l ./*sql
   34 ./lesson2.sql
   44 ./lesson3.sql
  142 total
+
+ cd ~/de_practice
+
+# 1. Все мои SQL-уроки
+find . -name "*.sql"
+# → перечислит lesson1-4.sql
+
+# 2. Что менялось за сутки
+find . -mtime -1
+# → твои свежие файлы
+
+# 3. Найти и остановить процесс
+ps aux | grep python     # найти PID
+# → если пусто — запусти тестовый: sleep 1000 &
+# → потом: ps aux | grep sleep, kill <pid>
+# (⚠️ kill — осознанно, только свой процесс)
+
+# 4. Переменные окружения
+echo $HOME
+# → /c/Users/user
+
+# 5. env | head
+env | head
+# → первые 10 переменных
+
+# Самый большой файл в репо:
+du -ah . | sort -rh | head -5
+
+# Сколько строк SQL-кода за неделю:
+wc -l week1/sql-practice/*.sql

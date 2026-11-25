@@ -58,3 +58,8 @@ WHERE a.city < b.city;
 -- 1) Читаемость: CTE читается сверху вниз, подзапросы вкладываются «лапшой».
 -- 2) Переиспользование: один CTE можно использовать несколько раз в запросе.
 -- 3) Рекурсия: WITH RECURSIVE — единственный способ обойти иерархию в стандартном SQL.
+
+WITH m AS (SELECT city, COUNT(*) AS cnt FROM students GROUP BY city)
+SELECT a.city, b.city FROM m a JOIN m b ON a.cnt = b.cnt WHERE a.city < b.city;
+-- Ожидаем: 0 строк (пусто)
+-- prediction: 0 строк — у городов 3/2/1 студентов, совпадений по cnt нет
